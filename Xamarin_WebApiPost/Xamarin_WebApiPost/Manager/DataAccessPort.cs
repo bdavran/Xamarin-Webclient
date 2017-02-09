@@ -70,5 +70,34 @@ namespace Xamarin_WebApiPost.Manager
 
             return officeDtoList;
         }
+
+        public string AddNewOffice(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                var officeContent = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("OfficeName", "Name"),
+                    new KeyValuePair<string, string>("OfficeStatusValue", "Value"),
+                    new KeyValuePair<string, string>("isApiRequest", "true")
+
+                };
+
+                var body = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("Controller", "Office"),
+                    new KeyValuePair<string, string>("Action", "AddOffice"),
+                    new KeyValuePair<string, string>("Method", "POST"),
+                    new KeyValuePair<string, string>("Paramaters", officeContent.ToString())
+                   
+                };
+
+
+
+            }
+
+
+            return null;
+        }
     }
 }
