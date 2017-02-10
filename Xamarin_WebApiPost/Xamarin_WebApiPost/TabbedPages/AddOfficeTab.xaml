@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin_WebApiPost.TabbedPages.AddOfficeTab"
+             BackgroundColor="Aqua">
+
+  <StackLayout x:Name="EntryStackLayout">
+    
+      <ScrollView>  
+        <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+          
+          <Entry Placeholder="Office Name" x:Name="AddOfficeName" TextColor="Black"></Entry>
+          <Entry Placeholder="Start Date" x:Name="AddStartDate" TextColor="Black"></Entry>
+          <Entry Placeholder="End Date" x:Name="AddEndDate" TextColor="Black"></Entry>
+          <Entry Placeholder="Office Status" x:Name="AddOfficeStatus" TextColor="Black"></Entry>
+          <Label Text="Is Api" TextColor="Black"></Label>
+          <Switch x:Name="IsApi"></Switch>
+        </StackLayout>
+      </ScrollView>
+    
+    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+    <Button x:Name="AddButton" Text="Ekle" Clicked="Button_OnClicked"></Button> 
+  </StackLayout>
+    </StackLayout>
+   
+    
+  
+  
+</ContentPage>

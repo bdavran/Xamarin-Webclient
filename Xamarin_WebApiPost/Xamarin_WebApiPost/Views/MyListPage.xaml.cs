@@ -37,5 +37,10 @@ namespace Xamarin_WebApiPost.Views
             Content = lblLabel;
 
         }
+
+        private void Button_OnClicked(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -14,9 +14,7 @@ namespace Xamarin_WebApiPost
     {
         public App()
         {
-            
-
-            MainPage = new MyListPage();
+            MainPage = new MyTabbedPage();
         }
 
         protected override void OnStart()

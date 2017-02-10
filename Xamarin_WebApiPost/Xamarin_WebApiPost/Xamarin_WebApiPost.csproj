@@ -39,9 +39,19 @@
     <Compile Include="Manager\DataAccessPort.cs" />
     <Compile Include="Manager\OfficeListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabbedPages\AddOfficeTab.xaml.cs">
+      <DependentUpon>AddOfficeTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TabbedPages\GetCityTab.xaml.cs">
+      <DependentUpon>GetCityTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TabbedPages\GetListTab.xaml.cs">
+      <DependentUpon>GetListTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyListPage.xaml.cs">
       <DependentUpon>MyListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyTabbedPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,6 +96,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MyListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TabbedPages\AddOfficeTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TabbedPages\GetListTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TabbedPages\GetCityTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
