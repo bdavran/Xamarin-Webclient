@@ -17,12 +17,15 @@ namespace Xamarin_WebApiPost.Manager
 
     public class AddOfficeDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string OfficeName { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get ; set; }
         public DateTime EndDate { get; set; }
         public string OfficeStatusValue { get; set; }
-        public bool IsApi { get; set; }
+        public int Phone1 { get; set; }
+        public string Address { get; set; }
+        public int CityId { get; set; }
+        public int CountyId { get; set; }
 
     }
 
@@ -33,4 +36,20 @@ namespace Xamarin_WebApiPost.Manager
 
     }
 
+    public class CountryDto
+    {
+        public string CountryName { get; set; }
+        public int CountryNumber { get; set; }
+    }
+
+    public class LoginObject
+    {
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Method { get; set; }
+        public string Parameters { get; set; }
+    }
 }
+
+
+

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -36,20 +37,22 @@ namespace Xamarin_WebApiPost.Manager
             var officeDtoList = new List<OfiiceListDto>();
             using (var client = new HttpClient())
             {
-
-                var body = new List<KeyValuePair<string, string>>
+                var obj = new LoginObject()
                 {
-                    new KeyValuePair<string, string>("Controller", "Office"),
-                    new KeyValuePair<string, string>("Action", "List"),
-                    new KeyValuePair<string, string>("Method", "GET")
+                    Controller = "Office",
+                    Action = "List",
+                    Method = "GET"
                 };
-                var content = new FormUrlEncodedContent(body);
+
+
+                var Json = JsonConvert.SerializeObject(obj);
+
+                var content = new StringContent(Json, Encoding.UTF8, "application/json");
 
                 if (!string.IsNullOrWhiteSpace(token))
                 {
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 }
                 var response = client.PostAsync("http://appapi.anahtarfinans.com/api/route/execute", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
@@ -78,19 +81,21 @@ namespace Xamarin_WebApiPost.Manager
             var cityDtoList = new List<CityDto>();
             using (var client = new HttpClient())
             {
-                var body = new List<KeyValuePair<string, string>>
+                var obj = new LoginObject()
                 {
-                    new KeyValuePair<string, string>("Controller", "Async"),
-                    new KeyValuePair<string, string>("Action", "GetCityList"),
-                    new KeyValuePair<string, string>("Method", "GET")
+                    Controller = "Async",
+                    Action = "GetCityList",
+                    Method = "GET"
                 };
-                var content = new FormUrlEncodedContent(body);
+
+                var Json = JsonConvert.SerializeObject(obj);
+
+                var content = new StringContent(Json, Encoding.UTF8, "application/json");
 
                 if (!string.IsNullOrWhiteSpace(token))
                 {
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 }
                 var response = client.PostAsync("http://appapi.anahtarfinans.com/api/route/execute", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
@@ -111,33 +116,86 @@ namespace Xamarin_WebApiPost.Manager
             }
             return cityDtoList;
 
-        } 
+        }
 
-        public  AddOfficeDto AddNewOffice(string token, AddOfficeDto addOfficeDto)
+        public List<CountryDto> CallCountyList(string token, AddOfficeDto getCityId)
         {
             
-
+            var countryDtoList = new List<CountryDto>();
             using (var client = new HttpClient())
             {
-                
-                var officeParameter = new List<KeyValuePair<string, string>>
+
+                getCityId = new AddOfficeDto()
                 {
-                    new KeyValuePair<string, string>("Id", addOfficeDto.Id),
-                    new KeyValuePair<string, string>("OfficeName", addOfficeDto.OfficeName),
-                    new KeyValuePair<string, string>("OfficeStatusValue", addOfficeDto.OfficeStatusValue),
-                    new KeyValuePair<string, string>("İsApiRequest", addOfficeDto.IsApi.ToString()),
-                    new KeyValuePair<string, string>("StartDate", addOfficeDto.StartDate.ToString("MMMM dd, yyyy")),
-                    new KeyValuePair<string, string>("EndDate", addOfficeDto.EndDate.ToString("MMMM dd, yyyy"))
-
+                    CityId = getCityId.CityId
                 };
-                dynamic jsonobj1 = JsonConvert.DeserializeObject(officeParameter.ToString());
 
+                var jsonobj1 = JsonConvert.SerializeObject(getCityId);
+
+                var obj = new LoginObject()
+                {
+                    Controller = "Async",
+                    Action = "GetCityList",
+                    Method = "GET",
+                    Parameters = jsonobj1
+                };
+
+                var Json = JsonConvert.SerializeObject(obj);
+
+                var content = new StringContent(Json, Encoding.UTF8, "application/json");
+
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                }
+                var response = client.PostAsync("http://appapi.anahtarfinans.com/api/route/execute", content).Result;
+                var result = response.Content.ReadAsStringAsync().Result;
+                dynamic jsonobj = JsonConvert.DeserializeObject(result);
+
+                var stateList = jsonobj.Content;
+
+                foreach (var item in stateList)
+                {
+                    countryDtoList.Add(new CountryDto()
+                    {
+                        CountryName = item.Text,
+                        CountryNumber = item.Value
+                    });
+                }
+
+
+            }
+            return countryDtoList;
+
+        }
+        public  AddOfficeDto AddNewOffice(string token, AddOfficeDto addOfficeDto)
+        {
+
+            
+            using (var client = new HttpClient())
+            {
+                addOfficeDto = new AddOfficeDto()
+                {
+                    Id = addOfficeDto.Id,
+                    OfficeName = addOfficeDto.OfficeName,
+                    Phone1 = addOfficeDto.Phone1,
+                    Address = addOfficeDto.Address,
+                    OfficeStatusValue = addOfficeDto.OfficeStatusValue,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    CityId = addOfficeDto.CityId,
+                    CountyId = addOfficeDto.CountyId
+                };
+
+                var jsonobj1 = JsonConvert.SerializeObject(addOfficeDto);
+                
                 var body = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("Controller", "Office"),
                     new KeyValuePair<string, string>("Action", "AddOffice"),
                     new KeyValuePair<string, string>("Method", "POST"),
-                    new KeyValuePair<string, string>("Paramaters",jsonobj1 )
+                    new KeyValuePair<string, string>("Paramaters",jsonobj1)
                    
                 };
 
@@ -154,9 +212,6 @@ namespace Xamarin_WebApiPost.Manager
                 dynamic jsonobj = JsonConvert.DeserializeObject(result);
 
                 var officeList = jsonobj.Content.officeList.Items;
-
-
-
 
             }
 

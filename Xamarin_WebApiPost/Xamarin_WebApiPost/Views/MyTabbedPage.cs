@@ -15,6 +15,7 @@ namespace Xamarin_WebApiPost.Views
             Children.Add(new GetListTab());
             Children.Add(new AddOfficeTab());
             Children.Add(new GetCityTab());
+            Children.Add(new GetStateList());
         }
     }
 }
