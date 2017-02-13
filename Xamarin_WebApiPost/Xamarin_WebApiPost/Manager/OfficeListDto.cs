@@ -60,19 +60,12 @@ namespace Xamarin_WebApiPost.Manager
         public string Method { get; set; }
         [JsonProperty(PropertyName = "Parameters")]
         public AddOfficeListFilter AddOfficeListFilter { get; set; }
-    }
-
-    public class LoginObject
-    {
-        public string Controller { get; set; }
-        public string Action { get; set; }
-        public string Method { get; set; }
-        
+        [JsonProperty(PropertyName = "model")]
+        public AddOfficeListFilter Model { get; set; }
     }
 
     public class AddOfficeListFilter
     {
-
         [JsonProperty(PropertyName = "cityId")]
         public int CityId { get; set; }
         [JsonProperty(PropertyName = "Id")]
@@ -93,6 +86,20 @@ namespace Xamarin_WebApiPost.Manager
         public int CountyId { get; set; }
 
     }
+
+    public class LoginObject
+    {
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Method { get; set; }
+        
+    }
+
+    //public class AddOfficeListModel
+    //{
+    //    [JsonProperty(PropertyName = "model")]
+    //    public AddOfficeListFilter AddOfficeListFilter { get; set; }
+    //}
 
     public class CountyListFilter
     {

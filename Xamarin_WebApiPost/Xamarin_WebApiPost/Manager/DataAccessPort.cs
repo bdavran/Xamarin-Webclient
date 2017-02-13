@@ -11,9 +11,12 @@ namespace Xamarin_WebApiPost.Manager
 {
     public class DataAccessPort
     {
+        private AddOfficeLoginObject addOfficeLoginObject;
+        //private AddOfficeListModel addOfficeListModel;
         private AddOfficeListFilter AddOfficeListFilter;
         public DataAccessPort()
         {
+            //addOfficeListModel = new AddOfficeListModel();
             AddOfficeListFilter = new AddOfficeListFilter();
         }
         public string GetToken()
@@ -173,8 +176,6 @@ namespace Xamarin_WebApiPost.Manager
         }
         public string AddNewOffice(string token, AddOfficeDto addOfficeDto)
         {
-            
-
             using (var client = new HttpClient())
             {     
 
@@ -183,6 +184,7 @@ namespace Xamarin_WebApiPost.Manager
                     Controller = "Office",
                     Action = "AddOffice",
                     Method = "POST",
+                    Model = AddOfficeListFilter,
                     AddOfficeListFilter = new AddOfficeListFilter()
                     {
                         CityId = addOfficeDto.CityId,
@@ -193,9 +195,8 @@ namespace Xamarin_WebApiPost.Manager
                         OfficeStatusValue = "1",
                         Phone1 = addOfficeDto.Phone1,
                         Address = addOfficeDto.Address,
-                        CountyId = addOfficeDto.CountyId
-
-                    }
+                        CountyId = addOfficeDto.CountyId   
+                    }           
                 };
                 var Json = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(Json, Encoding.UTF8, "application/json");
