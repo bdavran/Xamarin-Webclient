@@ -9,10 +9,10 @@ using Xamarin_WebApiPost.Manager;
 
 namespace Xamarin_WebApiPost.TabbedPages
 {
-    public partial class GetStateList : ContentPage
+    public partial class GetCountyTab : ContentPage
     {
         private DataAccessPort dataAccessPort;
-        public GetStateList()
+        public GetCountyTab()
         {
             Title = "Get State List";
             dataAccessPort = new DataAccessPort();
@@ -21,15 +21,14 @@ namespace Xamarin_WebApiPost.TabbedPages
             addOfficeDto.CityId = 34;
 
 
-            Title = "Ctiy Tab";
+            Title = "County Tab";
             InitializeComponent();
 
-            var CallCityList = dataAccessPort.CallCityList(getToken);
-            var CallStateList = dataAccessPort.CallCountyList(getToken, addOfficeDto);
+            var callCountyList = dataAccessPort.CallCountyList(getToken, addOfficeDto.CityId);
 
-            foreach (var stateDtoList in CallStateList)
+            foreach (var countyDtoList in callCountyList)
             {
-                lblabel.Text += string.Format("\n City Name : {0} \n City Number : {1} ", stateDtoList.CountryName, stateDtoList.CountryNumber);
+                lblabel.Text += string.Format("\n County Name : {0} \n County Number : {1} ", countyDtoList.CountyName, countyDtoList.CountyNumber);
             }
 
             var scroll = new ScrollView()
@@ -38,7 +37,6 @@ namespace Xamarin_WebApiPost.TabbedPages
             };
 
             Content = scroll;
-            InitializeComponent();
         }
     }
 }

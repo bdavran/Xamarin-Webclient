@@ -45,11 +45,11 @@
     <Compile Include="TabbedPages\GetCityTab.xaml.cs">
       <DependentUpon>GetCityTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TabbedPages\GetCountyTab.xaml.cs">
+      <DependentUpon>GetCountyTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TabbedPages\GetListTab.xaml.cs">
       <DependentUpon>GetListTab.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TabbedPages\GetStateList.xaml.cs">
-      <DependentUpon>GetStateList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyListPage.xaml.cs">
       <DependentUpon>MyListPage.xaml</DependentUpon>
@@ -123,7 +123,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TabbedPages\GetStateList.xaml">
+    <EmbeddedResource Include="TabbedPages\GetCountyTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

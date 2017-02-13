@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Xamarin_WebApiPost.Manager
 {
@@ -22,7 +24,7 @@ namespace Xamarin_WebApiPost.Manager
         public DateTime StartDate { get ; set; }
         public DateTime EndDate { get; set; }
         public string OfficeStatusValue { get; set; }
-        public int Phone1 { get; set; }
+        public long Phone1 { get; set; }
         public string Address { get; set; }
         public int CityId { get; set; }
         public int CountyId { get; set; }
@@ -36,10 +38,28 @@ namespace Xamarin_WebApiPost.Manager
 
     }
 
-    public class CountryDto
+    public class CountyDto
     {
-        public string CountryName { get; set; }
-        public int CountryNumber { get; set; }
+        public string CountyName { get; set; }
+        public int CountyNumber { get; set; }
+    }
+
+    public class CallCountyListLoginObject
+    {
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Method { get; set; }
+        [JsonProperty(PropertyName = "Parameters")]
+        public CountyListFilter CountyListFilter { get; set; }
+    }
+
+    public class AddOfficeLoginObject
+    {
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public string Method { get; set; }
+        [JsonProperty(PropertyName = "Parameters")]
+        public AddOfficeListFilter AddOfficeListFilter { get; set; }
     }
 
     public class LoginObject
@@ -47,7 +67,37 @@ namespace Xamarin_WebApiPost.Manager
         public string Controller { get; set; }
         public string Action { get; set; }
         public string Method { get; set; }
-        public string Parameters { get; set; }
+        
+    }
+
+    public class AddOfficeListFilter
+    {
+
+        [JsonProperty(PropertyName = "cityId")]
+        public int CityId { get; set; }
+        [JsonProperty(PropertyName = "Id")]
+        public int Id { get; set; }
+        [JsonProperty(PropertyName = "OfficeName")]
+        public string OfficeName { get; set; }
+        [JsonProperty(PropertyName = "StartDate")]
+        public DateTime StartDate { get; set; }
+        [JsonProperty(PropertyName = "EndDate")]
+        public DateTime EndDate { get; set; }
+        [JsonProperty(PropertyName = "OfficeStatusValue")]
+        public string OfficeStatusValue { get; set; }
+        [JsonProperty(PropertyName = "Phone1")]
+        public long Phone1 { get; set; }
+        [JsonProperty(PropertyName = "Address")]
+        public string Address { get; set; }
+        [JsonProperty(PropertyName = "countyId")]
+        public int CountyId { get; set; }
+
+    }
+
+    public class CountyListFilter
+    {
+        [JsonProperty(PropertyName = "cityId")]
+        public int CityId { get; set; }      
     }
 }
 

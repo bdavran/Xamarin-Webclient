@@ -4,17 +4,28 @@
              x:Class="Xamarin_WebApiPost.TabbedPages.AddOfficeTab"
              BackgroundColor="Aqua">
 
-  <StackLayout x:Name="EntryStackLayout">
+  <StackLayout x:Name="AddOfficeStackLayout">
     
       <ScrollView>  
         <StackLayout Orientation="Vertical" HorizontalOptions="Start">
           
           <Entry Placeholder="Office Name" x:Name="AddOfficeName" TextColor="Black"></Entry>
-          <Entry Placeholder="Start Date" x:Name="AddStartDate" TextColor="Black"></Entry>
-          <Entry Placeholder="End Date" x:Name="AddEndDate" TextColor="Black"></Entry>
-          <Entry Placeholder="Office Status" x:Name="AddOfficeStatus" TextColor="Black"></Entry>
-          <Label Text="Is Api" TextColor="Black"></Label>
-          <Switch x:Name="IsApi"></Switch>
+          <Entry Placeholder="Phone" Keyboard="Telephone" x:Name="AddPhone" TextColor="Black"></Entry>
+          <Entry Placeholder="Address"  x:Name="AddAddress" TextColor="Black"></Entry>
+          <Picker x:Name="cityPicker" Title="Select City">
+            <Picker.Items>
+              <x:String x:Name="cityString">                
+              </x:String>
+            </Picker.Items>
+          </Picker>
+          <Picker></Picker>
+          <Picker x:Name="countyPicker" Title="Select County">
+            <Picker.Items>
+              <x:String x:Name="countyString"></x:String>
+            </Picker.Items>
+            
+          </Picker>
+          
         </StackLayout>
       </ScrollView>
     
