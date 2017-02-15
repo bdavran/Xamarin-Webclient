@@ -18,6 +18,9 @@ namespace Xamarin_WebApiPost.TabbedPages
             addOfficeDto = new AddOfficeDto();
             dataAccessPort = new DataAccessPort();
             var getToken = dataAccessPort.GetToken();
+
+            
+            var getCities = dataAccessPort.CallCityList(getToken);
             addOfficeDto = new AddOfficeDto()
             {
                 CityId = 34,
@@ -27,6 +30,17 @@ namespace Xamarin_WebApiPost.TabbedPages
                 Address = "Bağdat Caddesi No:436 Daire:5 Bağlarbaşı",
                 CountyId = 2049,
             };
+
+            countyPicker.SelectedIndexChanged += CountySelected;
+
+            foreach (var item in getCities)
+            {
+                cityPicker.Items.Add(item.CityName);
+
+            }
+
+            cityPicker.SelectedIndexChanged += CitySelected;
+
             dataAccessPort.AddNewOffice(getToken,addOfficeDto);
             Title = "Add Office";
             InitializeComponent();
@@ -35,37 +49,56 @@ namespace Xamarin_WebApiPost.TabbedPages
             Content = AddOfficeStackLayout;
         }
 
-        private async void onCityChoosen(AddOfficeDto addOfficeDto , SelectedItemChangedEventArgs e)
+        private void CitySelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var getToken = dataAccessPort.GetToken();
-            var getCities = dataAccessPort.CallCityList(getToken);
+            var city = e.SelectedItem as CityDto;
+            
+            var getToken = dataAccessPort.GetToken();               
+            
+            var getCounties =  dataAccessPort.CallCountyList(getToken, city.CityNumber);
 
-            foreach (var item in getCities)
-            {
-                cityString += item.CityName;
-            }
-            var selectedCity = cityPicker.SelectedIndex;
-            addOfficeDto.CityId = selectedCity;
-            var getCounty = dataAccessPort.CallCountyList(getToken, selectedCity);
+            countyPicker.Items.clear();
 
-            foreach (var item in getCounty)
+
+            foreach (var item in getCounties)
             {
-                countyString += item.CountyName;
+                countyPicker.Items.Add(item.CountyName);
+                
             }
-            var selectedCounty = countyPicker.SelectedIndex;
-            addOfficeDto.CountyId = selectedCounty;
+
         }
+
+        private void CountySelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            
+
+        }
+
+        //private async void onCityChoosen(AddOfficeDto addOfficeDto, SelectedItemChangedEventArgs e)
+        //{
+
+
+        //    foreach (var item in getCities)
+        //    {
+        //        cityString += item.CityName;
+        //    }
+        //    var selectedCity = cityPicker.SelectedIndex;
+        //    addOfficeDto.CityId = selectedCity;
+        //    var getCounty = dataAccessPort.CallCountyList(getToken, selectedCity);
+
+        //    foreach (var item in getCounty)
+        //    {
+        //        countyString += item.CountyName;
+        //    }
+        //    var selectedCounty = countyPicker.SelectedIndex;
+        //    addOfficeDto.CountyId = selectedCounty;
+        //}
 
 
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-
-            
-
             var getToken = dataAccessPort.GetToken();
-            var getCities = dataAccessPort.CallCityList(getToken);
-
 
             if (AddOfficeName.Text != null)
             {
@@ -92,11 +125,13 @@ namespace Xamarin_WebApiPost.TabbedPages
 
             }
 
-            //onCityChoosen(addOfficeDto);
+            addOfficeDto.CityId = (CityDto)cityPicker.SelectedItem.CityId;
+            addOfficeDto.CountyId = (CountyDto)countyPicker.SelectedItem.CountyId;
             dataAccessPort.AddNewOffice(getToken, addOfficeDto);
+
             AddButton.Clicked += delegate
             {
-               dataAccessPort.AddNewOffice(getToken, addOfficeDto);
+                dataAccessPort.AddNewOffice(getToken, addOfficeDto);
             };
             throw new NotImplementedException();
         }

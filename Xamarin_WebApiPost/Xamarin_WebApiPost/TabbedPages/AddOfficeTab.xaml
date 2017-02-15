@@ -5,36 +5,34 @@
              BackgroundColor="Aqua">
 
   <StackLayout x:Name="AddOfficeStackLayout">
-    
-      <ScrollView>  
-        <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+
+    <ScrollView>
+      <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+
+        <Entry Placeholder="Office Name" x:Name="AddOfficeName" TextColor="Black"></Entry>
+        <Entry Placeholder="Phone" Keyboard="Telephone" x:Name="AddPhone" TextColor="Black"></Entry>
+        <Entry Placeholder="Address"  x:Name="AddAddress" TextColor="Black"></Entry>
+        <Picker x:Name="cityPicker" Title="Select City">
+          <Picker.Items>
           
-          <Entry Placeholder="Office Name" x:Name="AddOfficeName" TextColor="Black"></Entry>
-          <Entry Placeholder="Phone" Keyboard="Telephone" x:Name="AddPhone" TextColor="Black"></Entry>
-          <Entry Placeholder="Address"  x:Name="AddAddress" TextColor="Black"></Entry>
-          <Picker x:Name="cityPicker" Title="Select City">
-            <Picker.Items>
-              <x:String x:Name="cityString">                
-              </x:String>
-            </Picker.Items>
-          </Picker>
-          <Picker></Picker>
-          <Picker x:Name="countyPicker" Title="Select County">
-            <Picker.Items>
-              <x:String x:Name="countyString"></x:String>
-            </Picker.Items>
-            
-          </Picker>
-          
-        </StackLayout>
-      </ScrollView>
-    
+          </Picker.Items>
+        </Picker>
+        <Picker></Picker>
+        <Picker x:Name="countyPicker" Title="Select County">
+          <Picker.Items>
+          </Picker.Items>
+
+        </Picker>
+
+      </StackLayout>
+    </ScrollView>
+
     <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-    <Button x:Name="AddButton" Text="Ekle" Clicked="Button_OnClicked"></Button> 
-  </StackLayout>
+      <Button x:Name="AddButton" Text="Ekle" Clicked="Button_OnClicked"></Button>
     </StackLayout>
-   
-    
-  
-  
+  </StackLayout>
+
+
+
+
 </ContentPage>
