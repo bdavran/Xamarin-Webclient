@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Xamarin_WebApiPost.Manager;
 
 namespace Xamarin_WebApiPost.Manager
@@ -12,12 +13,11 @@ namespace Xamarin_WebApiPost.Manager
     public class DataAccessPort
     {
         private AddOfficeLoginObject addOfficeLoginObject;
-        //private AddOfficeListModel addOfficeListModel;
-        private AddOfficeListFilter AddOfficeListFilter;
+        private AddOfficeParameters AddOfficeParameters;
+        private AddOfficeModel AddOfficeModel;
         public DataAccessPort()
         {
-            //addOfficeListModel = new AddOfficeListModel();
-            AddOfficeListFilter = new AddOfficeListFilter();
+            AddOfficeModel = new AddOfficeModel();
         }
         public string GetToken()
         {
@@ -177,34 +177,51 @@ namespace Xamarin_WebApiPost.Manager
         public string AddNewOffice(string token, AddOfficeDto addOfficeDto)
         {
             using (var client = new HttpClient())
-            {     
+            {
+                AddOfficeModel = new AddOfficeModel()
+                {
+                    Id = 0,
+                    CityId = addOfficeDto.CityId,
+                    OfficeName = addOfficeDto.OfficeName,
+                    StartDate = DateTime.Now.ToString("d.M.yyyy hh:mm"),
+                    EndDate = DateTime.Now.ToString("d.M.yyyy hh:mm"),
+                    OfficeStatusValue = 1,
+                    Phone1 = addOfficeDto.Phone1,
+                    Address = addOfficeDto.Address,
+                    CountyId = addOfficeDto.CountyId,
+                    IsApi = true.ToString()
+                };
+
+
+
+                var modelConv = JsonConvert.SerializeObject(AddOfficeModel).Replace("\"", "\'");
+
+                AddOfficeParameters = new AddOfficeParameters()
+                {
+                    Model = modelConv
+                };
+                //var addOfficeParConv = JsonConvert.SerializeObject(AddOfficeParameters);
 
                 var obj = new AddOfficeLoginObject()
                 {
                     Controller = "Office",
                     Action = "AddOffice",
                     Method = "POST",
-                    Model = AddOfficeListFilter,
-                    AddOfficeListFilter = new AddOfficeListFilter()
-                    {
-                        CityId = addOfficeDto.CityId,
-                        Id = addOfficeDto.Id,
-                        OfficeName = addOfficeDto.OfficeName,
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Today,
-                        OfficeStatusValue = "1",
-                        Phone1 = addOfficeDto.Phone1,
-                        Address = addOfficeDto.Address,
-                        CountyId = addOfficeDto.CountyId   
-                    }           
+                    AddOfficeListFilter = AddOfficeParameters
                 };
-                var Json = JsonConvert.SerializeObject(obj);
-                var content = new StringContent(Json, Encoding.UTF8, "application/json");
+
+                var addOfficeListFilter = JsonConvert.SerializeObject(obj).Replace("\\", String.Empty);
 
 
-                client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                var content = new StringContent(addOfficeListFilter, Encoding.UTF8, "application/json");
 
-                var response =client.PostAsync("http://appapi.anahtarfinans.com/api/route/execute", content).Result;
+                if (!string.IsNullOrWhiteSpace(token))
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", token));
+                }
+
+                var response = client.PostAsync("http://appapi.anahtarfinans.com/api/route/execute", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
                 return result;
             }
